@@ -89,8 +89,11 @@ bool ShaderStorage::_saveCombinerKeys(const graphics::Combiners & _combiners) co
 #else
 	std::ofstream keysOut(keysFileName.c_str(), std::ofstream::trunc);
 #endif
-	if (!keysOut)
-		return false;
+	LOG(LOG_WARNING, "Enter _saveCombinerKeys ");
+	if (!keysOut) {
+	LOG(LOG_ERROR, "_saveCombinerKeys failed");
+	return false;
+	}
 
 	const size_t szCombiners = _combiners.size();
 
@@ -261,6 +264,7 @@ bool ShaderStorage::_loadFromCombinerKeys(graphics::Combiners & _combiners)
 
 	u32 szCombiners;
 	fin >> std::hex >> szCombiners;
+	LOG(LOG_WARNING, "Load %d combiner shaders from keys", szCombiners);
 	const f32 percent = szCombiners / 100.0f;
 	const f32 step = 100.0f / szCombiners;
 	f32 progress = 0.0f;
